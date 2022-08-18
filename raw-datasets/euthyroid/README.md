@@ -1,1 +1,0 @@
-# Euthyroid Sick Syndrome
