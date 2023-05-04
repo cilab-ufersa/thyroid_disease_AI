@@ -10,40 +10,13 @@ dataset = pd.read_csv('thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothy
 
 #print(dataset.info())
 #transformando os dados em dados categoricos 
-dataset['sex'] = dataset['sex'].astype('category').cat.codes.values
-dataset['on thyroxine'] = dataset['on thyroxine'].astype('category').cat.codes.values
-dataset['query on thyroxine'] = dataset['query on thyroxine'].astype('category').cat.codes.values
-dataset['on antithyroid medication'] = dataset['on antithyroid medication'].astype('category').cat.codes.values
-dataset['sick'] = dataset['sick'].astype('category').cat.codes.values 
-dataset['pregnant'] = dataset['pregnant'].astype('category').cat.codes.values
-dataset['thyroid surgery'] = dataset['thyroid surgery'].astype('category').cat.codes.values
-dataset['I131 treatment'] = dataset['I131 treatment'].astype('category').cat.codes.values
-dataset['query hypothyroid'] = dataset['query hypothyroid'].astype('category').cat.codes.values
-dataset['query hyperthyroid'] = dataset['query hyperthyroid'].astype('category').cat.codes.values
-dataset['lithium'] = dataset['lithium'].astype('category').cat.codes.values
-dataset['goitre'] = dataset['goitre'].astype('category').cat.codes.values
-dataset['tumor'] = dataset['tumor'].astype('category').cat.codes.values
-dataset['hypopituitary'] = dataset['hypopituitary'].astype('category').cat.codes.values
-dataset['psych'] = dataset['psych'].astype('category').cat.codes.values
-dataset['TSH measured'] = dataset['TSH measured'].astype('category').cat.codes.values
-dataset['T3 measured'] = dataset['T3 measured'].astype('category').cat.codes.values
-dataset['TT4 measured'] = dataset['TT4 measured'].astype('category').cat.codes.values
-dataset['T4U measured'] = dataset['T4U measured'].astype('category').cat.codes.values
-dataset['FTI measured'] = dataset['FTI measured'].astype('category').cat.codes.values
-dataset['TBG measured'] = dataset['TBG measured'].astype('category').cat.codes.values
-dataset['referral source'] = dataset['referral source'].astype('category').cat.codes.values
-dataset['binaryClass'] = dataset['binaryClass'].astype('category').cat.codes.values
-# print(dataset)
+for index in dataset.columns.values:
+        dataset[index]= dataset[index].astype("category").cat.codes.values
 
 #processo de limpeza do dataset(removendo linhas com dados faltantes)
-#print(dataset[dataset == '?'].count())
-dataset.drop(dataset[dataset['age'] == '?'].index, inplace=True)
-dataset.drop(dataset[dataset['TSH'] == '?'].index, inplace=True)
-dataset.drop(dataset[dataset['T3'] == '?'].index, inplace=True)
-dataset.drop(dataset[dataset['TT4'] == '?'].index, inplace=True)
-dataset.drop(dataset[dataset['T4U'] == '?'].index, inplace=True)
-dataset.drop(dataset[dataset['FTI'] == '?'].index, inplace=True)
-dataset['TBG'].replace('?', -1, inplace=True)
+for i in dataset.columns.values:
+    dataset.drop(dataset[dataset[i] == '?'].index, inplace=True)
+dataset = dataset.drop('TBG', axis=1)
 #print(dataset[dataset == '?'].count())
 #print(dataset)
 
