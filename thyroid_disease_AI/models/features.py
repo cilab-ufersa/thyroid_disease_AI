@@ -1,6 +1,8 @@
 import sys
 sys.path.append('thyroid_disease_AI')
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 from imblearn.over_sampling import SMOTE #para o balanceamento de dados
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import RFE
@@ -36,11 +38,17 @@ dataset_res, output_label = sm.fit_resample(dataset, output_label_dataset)
 model = RandomForestClassifier()
 model.fit(dataset, output_label_dataset)
 
+#plotando correlação
+plt.figure(figsize=(22,20))
+cor = dataset.corr()
+sns.heatmap(cor, annot=True, cmap=plt.cm.Reds)
+plt.show()
+
 #Selecionando as variáveis mais importantes
 selector = RFE(model, n_features_to_select=10, step=1) #Criando um objeto RFE (Recursive Feature Elimination) com o modelo e os parâmetros desejados
 selector = selector.fit(dataset, output_label_dataset) #Ajustando o seletor de recursos ao conjunto de dados e aos rótulos de saída
 selected_features = dataset.columns[selector.support_] #Selecionando as características escolhidas pelo seletor de recursos e armazenando seus nomes em uma lista
 
-print(selected_features)
+#print(selected_features)
 
 #resultado = dataset['age', 'sex', 'on thyroxine', 'thyroid surgery', 'TSH', 'T3', 'TT4', 'T4U', 'FTI', 'referral source']
