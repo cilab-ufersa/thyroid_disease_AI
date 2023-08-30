@@ -38,13 +38,13 @@ dataset = dataset.drop(['binaryClass'], axis=1) #dados que serão introduzidos n
 sm = SMOTE(k_neighbors=5)
 
 dataset_res, output_label = sm.fit_resample(dataset, output_label_dataset)
-# print(output_label.value_counts())
+print(output_label.value_counts())
 # print(dataset)
 
-dataset_balanced = pd.DataFrame(dataset_res, columns=dataset.columns)
-dataset_balanced['binaryClass'] = output_label
+# dataset_balanced = pd.DataFrame(dataset_res, columns=dataset.columns)
+# dataset_balanced['binaryClass'] = output_label
 
-hypothyroid_features_final = 'thyroid_disease_AI\datasets\hypothyroid\hypothyroid_features_final.csv'
-dataset_balanced.to_csv(hypothyroid_features_final, index=False)
+# hypothyroid_features_final = 'thyroid_disease_AI\datasets\hypothyroid\hypothyroid_features_final.csv'
+# dataset_balanced.to_csv(hypothyroid_features_final, index=False)
 
-print('Novo dataset criado ', hypothyroid_features_final)
+# print('Novo dataset criado ', hypothyroid_features_final)
