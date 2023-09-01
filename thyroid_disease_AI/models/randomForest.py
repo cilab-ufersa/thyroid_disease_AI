@@ -13,13 +13,11 @@ if __name__ == '__main__':
     #Carregando o dataset
     dataset = pd.read_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_dataset_clean.csv')  
     output_label_dataset = dataset['binaryClass']
-    # dataset.drop(['binaryClass'], axis=1) 
+    dataset = dataset.drop(['binaryClass'], axis=1) 
     # print(output_label_dataset.value_counts())
 
     #Balanceamento dos dados 
     dataset_res, output_label = balance_dataset_smote(dataset, output_label_dataset, random_state=42, k_neighbors=5)
-
-    print(dataset_res['binaryClass'].value_counts())
 
     #Dividindo o dataset em treino e teste
     #80 % para treino e 20% para teste

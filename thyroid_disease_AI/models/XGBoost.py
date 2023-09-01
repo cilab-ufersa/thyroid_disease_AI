@@ -14,13 +14,17 @@ file_name = "XGBoost.joblib"
 if __name__ == '__main__':
 
     #Carregando o dataset
-    dataset = pd.read_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_features_final.csv')  
+    dataset = pd.read_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_dataset_clean.csv')  
     output_label_dataset = dataset['binaryClass'] 
+    dataset = dataset.drop(['binaryClass'], axis=1) 
     # print(output_label_dataset.value_counts())
+
+    #Balanceamento dos dados 
+    dataset_res, output_label = balance_dataset_smote(dataset, output_label_dataset, random_state=42, k_neighbors=5)
 
     #Dividindo o dataset em treino e teste
     #80 % para treino e 20% para teste
-    input_train, input_test, output_train, output_test = slipt_and_standardize_dataset(dataset, output_label=output_label_dataset)
+    input_train, input_test, output_train, output_test = slipt_and_standardize_dataset(dataset_res, output_label=output_label)
     '''
     # Definindo o espaço de busca 
     param_grid_xgb = { 
