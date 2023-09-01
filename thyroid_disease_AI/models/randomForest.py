@@ -11,13 +11,20 @@ import joblib
 if __name__ == '__main__':
 
     #Carregando o dataset
-    dataset = pd.read_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_features_final.csv')  
-    output_label_dataset = dataset['binaryClass'] 
+    dataset = pd.read_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_dataset_clean.csv')  
+    output_label_dataset = dataset['binaryClass']
+    # dataset.drop(['binaryClass'], axis=1) 
     # print(output_label_dataset.value_counts())
+
+    #Balanceamento dos dados 
+    dataset_res, output_label = balance_dataset_smote(dataset, output_label_dataset, random_state=42, k_neighbors=5)
+
+    print(dataset_res['binaryClass'].value_counts())
 
     #Dividindo o dataset em treino e teste
     #80 % para treino e 20% para teste
-    input_train, input_test, output_train, output_test = slipt_and_standardize_dataset(dataset, output_label=output_label_dataset)
+    input_train, input_test, output_train, output_test = slipt_and_standardize_dataset(dataset_res, output_label=output_label)
+
     '''
     parametros = {
         'n_estimators': [50, 100, 200], # Valores que o hiperparâmetro deve assumir durante a busca em grade
@@ -28,7 +35,6 @@ if __name__ == '__main__':
     model_random = RandomForestClassifier(criterion='entropy', max_features ='sqrt', class_weight='balanced', max_depth=5, n_estimators=20, min_samples_split=5, min_samples_leaf=1, bootstrap=True, random_state=10)
     model_grid = GridSearchCV(model_random, parametros, cv = 5, scoring='accuracy')
     model_grid.fit(input_train, output_train) #Treinamento
-    joblib.dump(model_grid.best_estimator_, 'randomCV.sav')
 
     print(model_grid.best_estimator_)
     '''
