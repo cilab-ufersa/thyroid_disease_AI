@@ -38,8 +38,9 @@ if __name__ == '__main__':
     '''
     model = RandomForestClassifier(class_weight='balanced', 
                                 criterion='entropy',
-                                n_estimators=50, 
-                                random_state=10)
+                                n_estimators=50,
+                                random_state=0
+                                )
     
     model.fit(input_train, output_train) #Treinamento
     

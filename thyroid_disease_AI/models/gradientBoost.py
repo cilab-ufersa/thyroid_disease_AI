@@ -31,7 +31,7 @@ if __name__ == '__main__':
         'random_state': [42]
     }'''
 
-    #Criando o modelo de árvore de decisão
+    #Criando o modelo
     model= GradientBoostingClassifier(n_estimators=50,
                                       max_depth=5,
                                       random_state=42,
