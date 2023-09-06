@@ -10,6 +10,7 @@ import joblib
 if __name__ == '__main__':
     #Carregando o dataset
     dataset = pd.read_csv("thyroid_disease_AI\datasets\hypothyroid\hypothyroid_dataset_clean.csv")
+    dataset = dataset.drop_duplicates()
     output_label_dataset = dataset['binaryClass']
     dataset = dataset.drop(['binaryClass'], axis=1)
     
