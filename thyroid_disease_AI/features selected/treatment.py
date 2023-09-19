@@ -2,6 +2,7 @@ import sys
 sys.path.append('thyroid_disease_AI')
 import pandas as pd
 from imblearn.over_sampling import SMOTE #para o balanceamento de dados
+from utils import *
 
 # Lendo os dados
 dataset = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\hypothyroid.csv')
@@ -49,20 +50,30 @@ dataset.loc[(dataset['T4U']== '?') & (dataset['binaryClass'] ==1), 'T4U'] = mean
 # verificando discrepancia entre a quantidade de pacientes doentes e nao doentes
 # print(dataset['binaryClass'].value_counts())
 
-# #dividindo o dataset
-# output_label_dataset = dataset['binaryClass']
-# dataset = dataset.drop(['binaryClass'], axis=1) #dados que serão introduzidos no modelo
-# #balanceando os dados
-# sm = SMOTE(k_neighbors=5)
+#dividindo o dataset
+output_label_dataset = dataset['binaryClass']
+dataset = dataset.drop(['binaryClass'], axis=1) #dados que serão introduzidos no modelo
+#balanceando os dados
+sm = SMOTE(k_neighbors=5, random_state=42)
+   
+dataset_res, output_label = sm.fit_resample(dataset, output_label_dataset)
+input_train, input_test, output_train, output_test = slipt_and_standardize_dataset(dataset_res, output_label)
 
-# dataset_res, output_label = sm.fit_resample(dataset, output_label_dataset)
-# print(output_label.value_counts())
-# print(dataset)
+dataset_test = pd.DataFrame(input_test, columns=dataset.columns)
+dataset_train = pd.DataFrame(input_train, columns=dataset.columns)
 
-# dataset_balanced = pd.DataFrame(dataset_res, columns=dataset.columns)
-# dataset_balanced['binaryClass'] = output_label
+#dataset_test['binaryClass'] = output_test
+#dataset_train['binaryClass'] = output_train
 
-hypothyroid_features_final = 'thyroid_disease_AI\datasets\hypothyroid\hypothyroid_features_final.csv'
-dataset.to_csv(hypothyroid_features_final, index=False)
+output_test = pd.DataFrame(output_test, columns=['binaryClass'])
+output_train = pd.DataFrame(output_train, columns=['binaryClass'])
 
-print('Novo dataset criado ', hypothyroid_features_final)
+hypothyroid_dataset_test = 'thyroid_disease_AI\datasets\hypothyroid\hypothyroid_input_test.csv'
+dataset_test.to_csv(hypothyroid_dataset_test, index=False)
+output_test.to_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_output_test.csv', index=False)
+
+hypothyroid_dataset_train = 'thyroid_disease_AI\datasets\hypothyroid\hypothyroid_input_train.csv'
+dataset_train.to_csv(hypothyroid_dataset_train, index=False)
+output_train.to_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_output_train.csv', index=False)
+
+
