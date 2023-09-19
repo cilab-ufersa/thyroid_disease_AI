@@ -11,8 +11,7 @@ from utils.utils import *
 if __name__ == '__main__':
 
     # Carregando dataset
-    dataset =  pd.read_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_dataset_clean.csv')
-    dataset = dataset.drop_duplicates()
+    dataset =  pd.read_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_features_final.csv')
     output_label_dataset = dataset['binaryClass']
     dataset = dataset.drop(['binaryClass'], axis=1)
 
@@ -21,20 +20,27 @@ if __name__ == '__main__':
     
     # Dividindo os dados em 80% para treino e 20% para teste
     input_train, input_test, output_train, output_test = slipt_and_standardize_dataset(dataset=dataset_res, output_label=ouput_label)
-    '''
-    parametros = {
-        'criterion': ['gini', 'entropy'],          
-        'splitter': ['best', 'random'],            
-        'max_depth': [None, 10, 20, 30, 40],      
-        'min_samples_split': [2, 5, 10],          
-        'min_samples_leaf': [1, 2, 4],            
-        'max_features': ['auto', 'sqrt', 'log2'], 
-        'random_state': [42] 
-    }  
-    '''
+    
+    # parametros = {
+    #     'criterion': ['gini', 'entropy'],          
+    #     'splitter': ['best', 'random'],            
+    #     'max_depth': [None, 10, 20, 30, 40],      
+    #     'min_samples_split': [2, 5, 10],          
+    #     'min_samples_leaf': [1, 2, 4],            
+    #     'max_features': ['auto', 'sqrt', 'log2'], 
+    #     'random_state': [42] 
+    # }  
+    
+    # 'criterion': 'entropy', 'max_depth': None, 'max_features': 'sqrt', 'min_samples_leaf': 2, 'min_samples_split': 5, 'random_state': 42, 'splitter': 'best'
                                                  
     #Criando o modelo de árvore de decisão
-    model= DecisionTreeClassifier(criterion='gini', max_depth=None, max_features='sqrt', min_samples_leaf=2, min_samples_split=10, random_state=42, splitter='best')
+    model= DecisionTreeClassifier(criterion='entropy', 
+                                  max_depth=None, 
+                                  max_features='sqrt', 
+                                  min_samples_leaf=1, 
+                                  min_samples_split=21, 
+                                  random_state=42, 
+                                  splitter='best')
     model.fit(input_train, output_train) #Treinamento
 
     # grid = GridSearchCV(estimator=model, param_grid=parametros, cv=5, scoring='accuracy')
