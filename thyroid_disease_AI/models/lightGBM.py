@@ -9,37 +9,40 @@ import joblib
 
 if __name__ == '__main__':
     #Carregando o dataset
-    dataset = pd.read_csv("thyroid_disease_AI\datasets\hypothyroid\hypothyroid_dataset_clean.csv")
-    dataset = dataset.drop_duplicates()
-    output_label_dataset = dataset['binaryClass']
-    dataset = dataset.drop(['binaryClass'], axis=1)
-    
-    #Balanceamento dos dados
-    dataset_res, output_label = balance_dataset_smote(dataset, output_label_dataset, random_state=42, k_neighbors=5)
-    
-    #Dividindo os dados em treino (train) e teste (test)
     #80 % para treino e 20% para teste
-    input_train, input_test, output_train, output_test = slipt_and_standardize_dataset(dataset_res, output_label)
-
-    #treinando o modelo
+    input_train = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\input_train.csv')
+    input_train = input_train.values
+    input_test = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\input_test.csv')
+    input_test = input_test.values
+    output_train = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\output_train.csv')
+    output_test = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\output_test.csv')
     
+    '''
+    param_grid = {
+        'learning_rate': [0.01, 0.1, 0.2],
+        'max_depth': [3, 4, 5, 6],
+        'n_estimators': [50, 100, 200],
+        'num_leaves': [10, 20, 30],
+        'subsample': [0.8, 0.9, 1.0]
+    }
+    model_lgb = lgb.LGBMClassifier()
+    grid = GridSearchCV(estimator = model_lgb, param_grid = param_grid, cv=5, scoring='accuracy')
+    grid.fit(input_train, output_train)
+    print(grid.best_params_)
+
+    {'learning_rate': 0.2, 'max_depth': 5, 'num_leaves': 31}
+    {'learning_rate': 0.2, 'max_depth': 6, 'n_estimators': 200, 'num_leaves': 30, 'subsample': 0.8}
+    '''
+
+    # Carregando o modelo
     model = lgb.LGBMClassifier(
-        learning_rate = 0.3,
-        max_depth = 15,
-        n_estimators = 5,
+        learning_rate = 3.000001,
+        max_depth = 5,
+        n_estimators = 100,
         num_leaves = 15, 
-        subsample = 0.5 
+        subsample = 0.8,
     )
-    # param_grid = {
-    #     'learning_rate': [0.01, 0.1, 0.2],
-    #     'max_depth': [3, 4, 5, 6],
-    #     'n_estimators': [50, 100, 200],
-    #     'num_leaves': [10, 20, 30],
-    #     'subsample': [0.8, 0.9, 1.0]
-    # }
-    # model = GridSearchCV(estimator = model_lgb, param_grid = param_grid, cv=5, scoring='accuracy')
-    model.fit(input_train, output_train)
-    #print(model.best_estimator_)
+    model.fit(input_train, output_train) # Treinando o modelo
 
     joblib.dump(model, 'thyroid_disease_AI\models_file\LightGBM.sav')
 
@@ -49,6 +52,7 @@ if __name__ == '__main__':
     print("\n\n\n\n\n")
     
     plot_confusion_matrix(output_test, output_model_decision, model, title = 'Matriz Confusão')
+
 
     accuracy(output_test, output_model_decision) #Pontuação de acurácia
     
@@ -63,6 +67,6 @@ if __name__ == '__main__':
     print("\n\n\n\n\n")
 
     #plotando a curva de erro
-    miss_classification(input_train, output_train, input_test, output_test, model)
+    miss_classification(input_train, output_train['binaryClass'], input_test, output_test['binaryClass'], model)
 
     #learning_curves(input_train, output_train, input_test, output_test, model)
