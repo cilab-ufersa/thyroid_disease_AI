@@ -4,43 +4,44 @@ import pandas as pd #Para trabalhar com dataframes
 import matplotlib.pyplot as plt #Para plotar os gráficos
 from sklearn.ensemble import RandomForestClassifier #Para criar o modelo de árvore de decisão
 from utils import *
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+from scipy.stats import randint
 import joblib
 
 
 if __name__ == '__main__':
 
     #Carregando o dataset
-    dataset = pd.read_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_dataset_clean.csv')  
-    dataset = dataset.drop_duplicates()
-    output_label_dataset = dataset['binaryClass']
-    dataset = dataset.drop(['binaryClass'], axis=1) 
-    # print(output_label_dataset.value_counts())
-
-    #Balanceamento dos dados 
-    dataset_res, output_label = balance_dataset_smote(dataset, output_label_dataset, random_state=42, k_neighbors=5)
-
-    #Dividindo o dataset em treino e teste
     #80 % para treino e 20% para teste
-    input_train, input_test, output_train, output_test = slipt_and_standardize_dataset(dataset_res, output_label=output_label)
-
+    input_train = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\input_train.csv')
+    input_train = input_train.values
+    input_test = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\input_test.csv')
+    input_test = input_test.values
+    output_train = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\output_train.csv')
+    output_test = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\output_test.csv')
+    
     '''
-    parametros = {
-        'n_estimators': [50, 100, 200], # Valores que o hiperparâmetro deve assumir durante a busca em grade
-        'max_depth': [None, 10, 20], # Controla a profundidade maxima das árvores nas florestas
-        'min_samples_split': [2, 5, 8],
-        'min_samples_leaf': np.arange(1, 5, 1, dtype=int)}
+    param_dist = {
+        'n_estimators': [10, 200],
+        'max_depth': [1, 20],
+        'min_samples_split': [2, 20],
+        'min_samples_leaf': [1, 20],
+        'max_features': ['auto', 'sqrt', 'log2', None],
+        }
           
-    model_random = RandomForestClassifier(criterion='entropy', max_features ='sqrt', class_weight='balanced', max_depth=5, n_estimators=20, min_samples_split=5, min_samples_leaf=1, bootstrap=True, random_state=10)
-    model_grid = GridSearchCV(model_random, parametros, cv = 5, scoring='accuracy')
+    model_random = RandomForestClassifier()
+    model_grid = RandomizedSearchCV(model_random, param_distributions=param_dist, n_iter=100, scoring='accuracy', cv=5, random_state=42, n_jobs=-1)
     model_grid.fit(input_train, output_train) #Treinamento
 
-    print(model_grid.best_estimator_)
+    print(model_grid.best_params_)
+    {'n_estimators': 200, 'min_samples_split': 2, 'min_samples_leaf': 1, 'max_features': None, 'max_depth': 20}
     '''
-    model = RandomForestClassifier(class_weight='balanced', 
-                                criterion='entropy',
-                                n_estimators=50,
-                                random_state=0
+    model = RandomForestClassifier(
+                                n_estimators=12,
+                                max_depth=3,
+                                max_features ='log2',
+                                min_samples_split = 2,
+                                min_samples_leaf = 1,
                                 )
     
     model.fit(input_train, output_train) #Treinamento
@@ -63,4 +64,4 @@ if __name__ == '__main__':
     
     roc(output_test, output_model_decision) # Plotando a curva ROC
 
-    miss_classification(input_train, output_train, input_test, output_test, model) # Plotando a curva de erro
+    miss_classification(input_train, output_train['binaryClass'], input_test, output_test['binaryClass'], model) # Plotando a curva de erro
