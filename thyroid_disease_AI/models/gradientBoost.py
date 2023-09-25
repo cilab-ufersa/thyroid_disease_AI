@@ -10,39 +10,37 @@ from utils.utils import *
 if __name__ == '__main__':
 
     # Carregando dataset
-    dataset =  pd.read_csv('thyroid_disease_AI\datasets\hypothyroid\hypothyroid_dataset_clean.csv')
-    dataset = dataset.drop_duplicates()
-    output_label_dataset = dataset['binaryClass']
-    dataset = dataset.drop(['binaryClass'], axis=1)
-
-    # Balanceando os dados
-    dataset_res, output_label = balance_dataset_smote(dataset, output_label_dataset, random_state=42, k_neighbors=5)
+    #80 % para treino e 20% para teste
+    input_train = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\input_train.csv')
+    input_train = input_train.values
+    input_test = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\input_test.csv')
+    input_test = input_test.values
+    output_train = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\output_train.csv')
+    output_test = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\output_test.csv')
     
-    # Dividindo os dados em 80% para treino e 20% para teste
-    input_train, input_test, output_train, output_test = slipt_and_standardize_dataset(dataset_res, output_label)
     '''
     parametros = {
-        'n_estimators': [100, 200, 300],
-        'learning_rate': [0.01, 0.1, 0.2],
-        'max_depth': [3, 4, 5],
-        'min_samples_split': [2, 5, 10],
-        'min_samples_leaf': [1, 2, 4],
-        'max_features': ['auto', 'sqrt', 'log2'],
-        'subsample': [0.8, 0.9, 1.0],
-        'random_state': [42]
-    }'''
+        'n_estimators': [50, 100, 200],
+        'learning_rate': [0.05, 0.1, 0.2],
+        'max_depth': [3, 4, 5]
+                            }
+    model = GradientBoostingClassifier()
+    grid = GridSearchCV(estimator=model, param_grid=parametros, cv=5, scoring='accuracy')
+    grid.fit(input_train, output_train.values.ravel())
+    print(grid.best_params_)
 
-    #Criando o modelo
-    model= GradientBoostingClassifier(n_estimators=50,
-                                      max_depth=5,
-                                      random_state=42,
-                                      subsample=0.9,
-                                      max_features='sqrt')
-    model.fit(input_train, output_train) #Treinamento
+    {'learning_rate': 0.1, 'max_depth': 5, 'n_estimators': 100}
+    '''
 
-    # grid = GridSearchCV(estimator=model, param_grid=parametros, cv=5)
-    # print(grid.best_params_)
-    
+    # Criando o modelo
+    model= GradientBoostingClassifier(n_estimators = 20,
+                                      max_depth = 5,
+                                      learning_rate = 0.02,
+                                      subsample = 0.09,
+                                      max_features = 'sqrt',
+                                      )
+    model.fit(input_train, output_train) # Treinamento
+
     joblib.dump(model, 'thyroid_disease_AI\models_file\GradientBoost.sav')
 
     output_model_decision = model.predict(input_test)
@@ -60,5 +58,5 @@ if __name__ == '__main__':
     
     roc(output_test, output_model_decision) # Plotando a curva ROC
 
-    miss_classification(input_train, output_train, input_test, output_test, model) # Plotando a curva de erro
+    miss_classification(input_train, output_train['binaryClass'], input_test, output_test['binaryClass'], model) # Plotando a curva de erro
    
