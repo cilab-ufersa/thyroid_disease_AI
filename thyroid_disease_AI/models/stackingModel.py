@@ -24,26 +24,26 @@ if __name__ == '__main__':
     output_test = pd.read_csv('C:\\Users\\caiom\\Desktop\\Sist Hypo\\thyroid_disease_AI\\thyroid_disease_AI\\datasets\\hypothyroid\\output_test.csv')                                 
 
     estimators = [ 
-        ('xgb', XGBClassifier(
-            colsample_bytree = 0.1,
-            gamma = 0.5,
-            learning_rate = 0.04,
-            max_depth = 9,
-            min_child_weight = 5,
-            n_estimators = 200,
-            subsample = 0.1)), 
-        ('random', RandomForestClassifier(
-            n_estimators=12,
-            max_depth=3,
-            max_features ='log2',
-            min_samples_split = 2,
-            min_samples_leaf = 1,)),
-        ('lg', lgb.LGBMClassifier(
-            learning_rate = 3.000001,
-            max_depth = 5,
-            n_estimators = 100,
-            num_leaves = 15, 
-            subsample = 0.8,)),
+        # ('xgb', XGBClassifier(
+        #     colsample_bytree = 0.1,
+        #     gamma = 0.5,
+        #     learning_rate = 0.04,
+        #     max_depth = 9,
+        #     min_child_weight = 5,
+        #     n_estimators = 200,
+        #     subsample = 0.1)),
+        # ('random', RandomForestClassifier(
+        #     n_estimators=12,
+        #     max_depth=3,
+        #     max_features ='log2',
+        #     min_samples_split = 2,
+        #     min_samples_leaf = 1,)),
+        # ('lg', lgb.LGBMClassifier(
+        #     learning_rate = 3.000001,
+        #     max_depth = 5,
+        #     n_estimators = 100,
+        #     num_leaves = 15, 
+        #     subsample = 0.8,)),
         ('GDBoost', GradientBoostingClassifier(
             n_estimators = 20,
             max_depth = 5,
@@ -68,14 +68,14 @@ if __name__ == '__main__':
     estimators=estimators,
     final_estimator=RandomForestClassifier(
             n_estimators=12,
-            max_depth=3,
+            max_depth=5,
             max_features ='log2',
             min_samples_split = 2,
-            min_samples_leaf = 1,)
+            min_samples_leaf = 1)
     )
     model.fit(input_train, output_train) 
 
-    # joblib.dump(model, 'thyroid_disease_AI\models_file\StackingModel.sav')
+    joblib.dump(model, 'thyroid_disease_AI\models_file\StackingModel.sav')
 
     # Fazer a classificação
     output_model_decision = model.predict(input_test)
