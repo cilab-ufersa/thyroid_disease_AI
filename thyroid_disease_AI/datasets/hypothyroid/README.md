@@ -1,7 +1,7 @@
 # Descrição sobre os dataset's
 
 ### hypothyroid.csv
-- Este é o dataset original sem alterações, encontrado no [Link](inserir_link).
+- Este é o dataset original sem alterações, encontrado no [Link](https://archive.ics.uci.edu/dataset/102/thyroid+disease).
 
 ### hypothyroid_dataset_dirty.csv
 - Neste dataset, esta as features que foram selecionadas, porém, os dados ainda não passaram pelo processo de limpeza e balanceamento.
