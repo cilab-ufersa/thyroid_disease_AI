@@ -1,0 +1,7 @@
+Features;
+2, TSH, FTI
+3, TSH, T3, FTI, 
+5, TSH measured, TSH, T3, TT4, FTI
+8, age, THS measured, TSH, T3, TT4, T4U, FTI, referral souce
+10, age, sex, on thyroxine, THS measured, TSH, T3, TT4, T4U, FTI, referral source
+12, age, sex, on thyroxine, query hypothyroid, THS measured, TSH, T3 measured, T3, TT4, T4U, FTI, referral source

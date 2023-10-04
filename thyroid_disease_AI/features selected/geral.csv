@@ -1,0 +1,13 @@
+clustering;2 Features;3 Features;5 Features;8 Features;10 Features;12 Features
+3, TT4,T4U measured, TT4, T4U measured, FTI measured;T3, TT4, T4U measured, FTI measured, FTI, TSH, T3, TT4 measured, TT4, T4U measured, T4U, FTI measured, FTI, on thyroxine, TSH, T3 measured, T3, TT4 measured, TT4, T4U measured, T4U, FTI measured, FTI, on thyroxine, query hyperthyroid, psych, TSH, T3 measured, T3, TT4 measured, TT4, T4U measured, T4U, FTI measured, FTI
+5, T3 measured, TT4 measured, T3 measured, TT4 measured, TT4, pregnant, psych, T3 measured, TT4 measured, TT4, pregnant, psych, T3 mesuared, T3, TT4 measured, TT4, T4U, FTI, pregnant, psych, TSH measured, TSH, T3 measured, T3, TT4 measured, TT4, T4U, FTI, pregnant, query hyperthyroid, lithium, psych, TSH measured, TSH, T3 measured, T3, TT4 measured, TT4, T4U, FTI
+8, T3 measured, TT4 measured, T3 measured, TT4, T4U measured, I131 treatment, T3 measured, TT4, T4U measured, FTI, I131 treatment, psych, TSH, T3 measured, T3, TT4, T4U measured, FTI, I131 treatment, psych, TSH, T3 measured, T3, TT4, T4U measured, T4U, FTI measured, FTI, I131 treatment, query hyperthyroid, psych, TSH, T3 measured, T3, TT4 measured, TT4, T4U measured, T4U, FTI measured, FTI
+10, TT4 measured, T4U measured, pregnant, TT4 measured, T4U measured, sick, pregnant, T3 measured, TT4 measured, T4U measured, sick, pregnant, lithium, T3 measured, TT4 measured, TT4, T4U measured, FTI, sick, pregnant, I131 treatment, lithium, T3 measured, T3, TT4 measured, TT4, T4U measured, FTI, sick, pregnant, I131 treatment, lithium, TSH measured, TSH, T3 measured, T3, TT4 measured, TT4, T4U measured, FTI
+12, TT4 measured, T4U measured, sick, TT4 measured, T4U measured, sick, I131 treatment, T3 mesuared, TT4 measured, T4U measured, on antithyroid medication, sick, I131 treatment, lithium, T3 measured, TT4 measured, TT4, T4U measured, on antithyroid medication, sick, I131 treatment, lithium, goitre, psych, T3 measured, TT4 measured, TT4, T4U measured, on antithyroid medication, sick, pregnant, I131 treatment, lithium, goitre, psych, T3 measured, TT4 measured, TT4, T4U measured, FTI
+2, TSH, FTI
+3, TSH, T3, FTI, 
+5, TSH measured, TSH, T3, TT4, FTI
+8, age, THS measured, TSH, T3, TT4, T4U, FTI, referral souce
+10, age, sex, on thyroxine, THS measured, TSH, T3, TT4, T4U, FTI, referral source
+12, age, sex, on thyroxine, query hypothyroid, THS measured, TSH, T3 measured, T3, TT4, T4U, FTI, referral source
+10, T4U, T4U measured, FTI, FTI measured, T3, T3 measured, TT4, TT4 measured, TSH, TSH measured
