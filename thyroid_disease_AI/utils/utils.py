@@ -25,7 +25,7 @@ def prepare_dataset(path_origin, columns_labels, path_destiny):
     dataframe.to_csv(path_destiny, index=False)
 
 
-def plot_confusion_matrix(output_test, output_model_decision, model, title, labelx='Classificação Predita', labely='Classificação Real', display_labels=['Normal', 'Doente']):
+def plot_confusion_matrix(output_test, output_model_decision, model, title, labelx='Prediction', labely='Real', display_labels=['Normal', 'Sick']):
     """plot confusion matrix
 
     Args:
@@ -110,7 +110,7 @@ def roc(output_test, output_model, title = "Curva ROC"):
     return fig
 
 
-def miss_classification(input_train, output_train, input_test, output_test, model, title='Curva de erro', labelx='Conjunto de treinamento', labely='Erro de classificação', label1='Erro de treinamento', label2='Erro de teste'):
+def miss_classification(input_train, output_train, input_test, output_test, model, title='Curva de erro', labelx='Training Set', labely='Classification error', label1='Training error', label2='Test error'):
     """ Plot miss classification error
 
     Args:
