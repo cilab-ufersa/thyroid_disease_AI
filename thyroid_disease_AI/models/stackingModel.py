@@ -76,7 +76,7 @@ if __name__ == '__main__':
     )
     model.fit(input_train, output_train) 
 
-    # joblib.dump(model, 'thyroid_disease_AI\models_file\StackingModel.sav')
+    joblib.dump(model, 'thyroid_disease_AI\models_file\StackingModel.sav')
 
     # Fazer a classificação
     output_model_stacking = model.predict_proba(input_test)[:, 1]
@@ -85,17 +85,17 @@ if __name__ == '__main__':
 
     print(f'AUC: {auc}')
 
-    # #Plotando
-    # plot_confusion_matrix(output_test.values, output_model_stacking, model, title = 'Matriz Confusão')
+    #Plotando
+    plot_confusion_matrix(output_test.values, output_model_stacking, model, title = 'Matriz Confusão')
 
-    # accuracy(output_test, output_model_stacking) #Pontuação de acurácia
+    accuracy(output_test, output_model_stacking) #Pontuação de acurácia
     
-    # precision(output_test, output_model_stacking) #Pontuação de precisão
+    precision(output_test, output_model_stacking) #Pontuação de precisão
 
-    # recall(output_test, output_model_stacking) #Pontuação de recall
+    recall(output_test, output_model_stacking) #Pontuação de recall
 
-    # f1(output_test, output_model_stacking)
+    f1(output_test, output_model_stacking)
     
-    # roc(output_test, output_model_stacking) #plotando a curva ROC
+    roc(output_test, output_model_stacking) #plotando a curva ROC
  
-    # miss_classification(input_train, output_train['binaryClass'], input_test, output_test['binaryClass'], model)     #plotando a curva de erro    
+    miss_classification(input_train, output_train['binaryClass'], input_test, output_test['binaryClass'], model)     #plotando a curva de erro    
