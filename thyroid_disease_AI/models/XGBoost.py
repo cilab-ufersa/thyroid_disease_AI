@@ -5,6 +5,7 @@ from xgboost import XGBClassifier #Para criar o modelo de árvore de decisão
 import matplotlib.pyplot as plt 
 from utils import *
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import roc_auc_score
 import joblib
 
 file_name = "XGBoost.joblib"
@@ -57,19 +58,23 @@ if __name__ == '__main__':
     joblib.dump(model, 'thyroid_disease_AI\models_file\XGBoostClassifier.sav')
 
     # Fazer a classificação
-    output_model_decision = model.predict(input_test)
+    output_model_XGBoost = model.predict_proba(input_test)[:, 1]
+
+    auc = roc_auc_score(output_test, output_model_XGBoost)
+
+    print(f'AUC: {auc}')
 
     #Plotando
-    plot_confusion_matrix(output_test.values, output_model_decision, model, title = 'Matriz Confusão')
+    plot_confusion_matrix(output_test.values, output_model_XGBoost, model, title = 'Matriz Confusão')
 
-    accuracy(output_test, output_model_decision) #Pontuação de acurácia
+    accuracy(output_test, output_model_XGBoost) #Pontuação de acurácia
     
-    precision(output_test, output_model_decision) #Pontuação de precisão
+    precision(output_test, output_model_XGBoost) #Pontuação de precisão
 
-    recall(output_test, output_model_decision) #Pontuação de recall
+    recall(output_test, output_model_XGBoost) #Pontuação de recall
 
-    f1(output_test, output_model_decision)
+    f1(output_test, output_model_XGBoost)
     
-    roc(output_test, output_model_decision) #plotando a curva ROC
+    roc(output_test, output_model_XGBoost) #plotando a curva ROC
  
     miss_classification(input_train, output_train['binaryClass'], input_test, output_test['binaryClass'], model)     #plotando a curva de erro
