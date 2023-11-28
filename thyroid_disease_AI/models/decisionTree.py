@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt #Para plotar os gráficos
 from sklearn.tree import DecisionTreeClassifier #Para criar o modelo de árvore de decisão
 from mlxtend.plotting import plot_learning_curves
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import roc_auc_score
 import joblib
 from utils.utils import * 
 
@@ -51,7 +52,11 @@ if __name__ == '__main__':
 
     joblib.dump(model, 'thyroid_disease_AI\models_file\DecisionTree.sav')
 
-    output_model_decision = model.predict(input_test)
+    output_model_decision = model.predict_proba(input_test)[:, 1]
+
+    auc = roc_auc_score(output_test, output_model_decision)
+
+    print(f'AUC: {auc}')
 
     #Plotando a matriz de confusão
     plot_confusion_matrix(output_test, output_model_decision, model, title='Matriz confusão')

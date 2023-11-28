@@ -4,6 +4,7 @@ import lightgbm as lgb
 import pandas as pd
 from utils import *
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import roc_auc_score
 import numpy as np
 import joblib
 
@@ -44,25 +45,29 @@ if __name__ == '__main__':
     )
     model.fit(input_train, output_train) # Treinando o modelo
 
-    joblib.dump(model, 'thyroid_disease_AI\models_file\LightGBM.sav')
+    # joblib.dump(model, 'thyroid_disease_AI\models_file\LightGBM.sav')
 
     #realizando predições
-    output_model_decision = model.predict(input_test)
+    output_model_light = model.predict_proba(input_test)[:, 1]
+
+    auc = roc_auc_score(output_test, output_model_light)
+
+    print(f'AUC: {auc}')
     
     print("\n\n\n\n\n")
     
-    plot_confusion_matrix(output_test, output_model_decision, model, title = 'Matriz Confusão')
+    plot_confusion_matrix(output_test, output_model_light, model, title = 'Matriz Confusão')
 
 
-    accuracy(output_test, output_model_decision) #Pontuação de acurácia
+    accuracy(output_test, output_model_light) #Pontuação de acurácia
     
-    precision(output_test, output_model_decision) #Pontuação de precisão
+    precision(output_test, output_model_light) #Pontuação de precisão
 
-    recall(output_test, output_model_decision) #Pontuação de recall
+    recall(output_test, output_model_light) #Pontuação de recall
 
-    f1(output_test, output_model_decision)
+    f1(output_test, output_model_light)
     
-    roc(output_test, output_model_decision) #plotando a curva ROC
+    roc(output_test, output_model_light) #plotando a curva ROC
     
     print("\n\n\n\n\n")
 
