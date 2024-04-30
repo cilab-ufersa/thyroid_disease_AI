@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt #Para plotar os gráficos
 from sklearn.ensemble import RandomForestClassifier #Para criar o modelo de árvore de decisão
 from utils import *
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+from sklearn.metrics import roc_auc_score
 from scipy.stats import randint
 import joblib
 
@@ -49,19 +50,23 @@ if __name__ == '__main__':
     joblib.dump(model, 'thyroid_disease_AI\models_file\RandomCV.sav')
 
     # Fazer a classificação 
-    output_model_decision = model.predict(input_test)
+    output_model_random = model.predict_proba(input_test)[:, 1]
+
+    auc = roc_auc_score(output_test, output_model_random)
+
+    print(f'AUC: {auc}')
 
     #Plotando a matriz de confusão
-    plot_confusion_matrix(output_test, output_model_decision, model, title='Matriz confusão')
+    plot_confusion_matrix(output_test, output_model_random, model, title='Matriz confusão')
 
-    accuracy(output_test, output_model_decision) # Pontuação de acurácia
+    accuracy(output_test, output_model_random) # Pontuação de acurácia
     
-    precision(output_test, output_model_decision) # Pontuação de precisão
+    precision(output_test, output_model_random) # Pontuação de precisão
 
-    recall(output_test, output_model_decision) # Pontuação de recall
+    recall(output_test, output_model_random) # Pontuação de recall
 
-    f1(output_test, output_model_decision) # Pontuação de F1
+    f1(output_test, output_model_random) # Pontuação de F1
     
-    roc(output_test, output_model_decision) # Plotando a curva ROC
+    roc(output_test, output_model_random) # Plotando a curva ROC
 
     miss_classification(input_train, output_train['binaryClass'], input_test, output_test['binaryClass'], model) # Plotando a curva de erro
