@@ -22,7 +22,7 @@ The project is implemented in Python using Jupyter Notebook. The libraries used 
 
 ```bash
 $ git clone
-
+```
 ## Prerequisites
 
 What things you need to have to be able to run:
