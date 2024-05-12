@@ -202,3 +202,46 @@ def slipt_and_standardize_dataset(dataset, output_label, test_size=0.2, random_s
     input_test = scaler.transform(input_test)
 
     return input_train, input_test, output_train, output_test
+
+def remove_outliers_rows(df, z_threshold=3, target_column=None):
+    """
+    Remove rows with outliers from a DataFrame.
+
+    Parameters:
+    - df (DataFrame): Input DataFrame.
+    - z_threshold (float): Z-score threshold for outlier detection. Defaults to 3.
+    - target_column (str): Name of the target label column to exclude from outlier removal. Defaults to None.
+
+    Returns:
+    - DataFrame: DataFrame with rows containing outliers removed.
+    """
+    df_copy = df.copy()  
+    for column in df_copy.columns:
+        if column == target_column[0] or column == target_column[1]:
+            continue  # Skip outlier removal for the target class column
+        # Convert column values to numeric, ignoring non-numeric values like '?'
+        df_copy[column] = pd.to_numeric(df_copy[column], errors='coerce')
+        z_scores = zscore(df_copy[column])
+        outlier_indices = np.where(np.abs(z_scores) >= z_threshold)[0]
+        df_copy = df_copy.drop(outlier_indices)
+    
+    return df_copy
+
+
+def impute_missing_with_means(dataset, column, binary_class):
+    """
+    Impute missing values in a column with the mean of the corresponding binary class.
+
+    Parameters:
+    - dataset (DataFrame): Input DataFrame.
+    - column (str): Column name.
+    - binary_class (str): Binary class column name.
+
+    Returns:
+    - None
+    """
+    dataset[column] = dataset[column].replace('?', np.nan)  # Replace '?' with NaN
+    mean_1 = dataset[column].loc[(~dataset[column].isnull()) & (dataset['binaryClass'] == 1)].astype(float).mean().round(2)
+    mean_0 = dataset[column].loc[(~dataset[column].isnull()) & (dataset['binaryClass'] == 0)].astype(float).mean().round(2)
+    dataset.loc[(dataset[column].isnull()) & (dataset['binaryClass'] == 0), column] = mean_0
+    dataset.loc[(dataset[column].isnull()) & (dataset['binaryClass'] == 1), column] = mean_1    
