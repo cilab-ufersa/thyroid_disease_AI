@@ -41,6 +41,11 @@ $ pip install requirements.txt
 
 This project uses SHAP for explainable AI. SHAP (SHapley Additive exPlanations) is a game theoretic approach to explain the output of any machine learning model. It connects optimal credit allocation with local explanations using the classic Shapley values from game theory and their related extensions.
 
+ ##  Publications related to this project
+
+ Cavalcante, C. M. V., and Rosana C. B. Rego. ["Early prediction of hypothyroidism based on feature selection and explainable artificial intelligence."](https://sol.sbc.org.br/index.php/sbcas/article/view/28805/28610) In: Simpósio Brasileiro de Computação Aplicada à Saúde (SBCAS), 2024, Goiânia. *Anais do XXIV Simpósio Brasileiro de Computação Aplicada à Saúde*, 2024. pp. 49-60.
+
+
 ## Support by UFERSA Edital PROPPG 65/2022 (PAPC)
 
 Financial support in granting a Scientific Initiation scholarship and UFERSA/PROPPG 65/2022 (PAPC)
