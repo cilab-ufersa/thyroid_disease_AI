@@ -45,7 +45,11 @@ This project uses SHAP for explainable AI. SHAP (SHapley Additive exPlanations) 
 
  Cavalcante, C. M. V., and Rosana C. B. Rego. ["Early prediction of hypothyroidism based on feature selection and explainable artificial intelligence."](https://sol.sbc.org.br/index.php/sbcas/article/view/28805/28610) In: Simpósio Brasileiro de Computação Aplicada à Saúde (SBCAS), 2024, Goiânia. *Anais do XXIV Simpósio Brasileiro de Computação Aplicada à Saúde*, 2024. pp. 49-60.
 
- Cavalcante, C. M. V., and Rosana C. B. Rego. [" Explainable AI Diagnosis for Hypothyroidism."](https://github.com/cilab-ufersa/thyroid_disease_AI/blob/main/thyroid_disease_AI/papers/CIBCB_2024.pdf) In: 21st IEEE Conference on Computational Intelligence in Bioinformatics and Computational Biology (CIBCB), 2024, Natal, Brazil. .
+ Cavalcante, C. M. V., and Rosana C. B. Rego. ["Explainable AI Diagnosis for Hypothyroidism."](https://github.com/cilab-ufersa/thyroid_disease_AI/blob/main/thyroid_disease_AI/papers/CIBCB_2024.pdf) In: 21st IEEE Conference on Computational Intelligence in Bioinformatics and Computational Biology (CIBCB), 2024, Natal, Brazil. .
+
+## Software Developed 
+
+HypoAssist: A software for early prediction of hypothyroidism based on feature selection and explainable artificial intelligence. The software is available at [HypoAssist© : Diagnostic Assistant for Hypothyroidism](https://github.com/cilab-ufersa/hypo_app). 
 
 
 
